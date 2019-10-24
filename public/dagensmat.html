@@ -1,0 +1,32 @@
+<html>
+	<head>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>	
+	<style>
+	#mat{
+    text-align: center;
+}
+
+	
+	</style>
+	</head>
+<body>
+<h1 id="mat">Dagens Mat : DE DU ÄTER</h1>
+<script>
+$(document).ready(function(){
+ 
+ 
+	$.get( "/mat", function( data ) {
+  $( "#mat" ).html(data.data[0].svfood);
+  
+ 
+
+console.log(data.data[0].svfood)
+});
+
+
+
+ });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+</body>
+</html>
