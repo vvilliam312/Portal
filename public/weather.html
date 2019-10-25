@@ -23,7 +23,7 @@
       </head>
 <body>
         <div  id="tabs">
-           
+                          <h1>Jakobstad </h1>
                         <h1 class="result1"> </h1>
                 
 <!--                 
@@ -84,7 +84,7 @@ $.get( url1, function( data ) {
     var humidity=data.main.humidity;
 console.log(desc)
 var uperDesc =desc.charAt(0).toUpperCase()+desc.slice(1);
-  $( ".result1" ).html( data.main.temp +' °C i Jakobstad ' +'<img src="'+weatherLogo+'">' +'<br>'+uperDesc+'<br>'+
+  $( ".result1" ).html( data.main.temp +' °C '+'<img src="'+weatherLogo+'">' +'<br>'+uperDesc+'<br>'+
   pressure +' hPa'+'<br>'+ 'Luftfuktighet: '+humidity + ' %');
  
 });

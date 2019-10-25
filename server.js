@@ -10,11 +10,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 let db = new sqlite3.Database('./todayfood/foodlist.db');
+let db1 = new sqlite3.Database('./dayName/namn.db');
 app.use(express.static('public'))
 
 
 
- app.get('/', (req, res) => res.send('Hello!asdasd World!'))
+ app.get('/', (req, res) => res.send('Hello!World!'))
 
 
 app.get('/mat', (req, res,next) => {
@@ -37,6 +38,32 @@ if(err){
   })
 })
 
+app.get('/getname', function (req, res) {
+console.log('Connected');
+//hämta dagens namn
+
+var d = new Date();
+var y=d.getFullYear();
+var m=d.getMonth()+1;
+var da=d.getDate();
+var date = y+"-"+m+"-"+da;
+let sql = `SELECT * from namns where datum = '${date}'`;
+//console.log(sql);
+
+           db1.get(sql, [], (err, row) => {
+                                 if (err) {
+                                     //return console.log(err.message);
+                                     res.json({"fel":"felkk"})
+                                 }
+            //console.log(row);
+  res.json({"namn":row.namn})
+            })
+           //res.json(row)
+          
+          
+             
+                 
+}); //app get 
 
 
 
