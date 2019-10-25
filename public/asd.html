@@ -1,0 +1,114 @@
+<html>
+    <head><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+        $( function() {
+          $( "#tabs" ).tabs();
+        } );
+        </script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+        a{
+           color:black;    
+           }
+           body{overflow: hidden;}
+          
+        </style>
+      </head>
+<body>
+        <div  id="tabs">
+                  <ul class="list-group">
+                  <li class="<!--list-group-item active-->"><a class="nav-link" href="#tabs-1">Weather in Jakobstad</a></li>
+                  <li class="list-group-item  "><a class="nav-link" href="#tabs-2">Weather in Helsinki</a></li>
+                  <li class="list-group-item "><a class="nav-link" href="#tabs-3">Weather in London</a></li>
+                </ul>
+                 <div class="list-group-item" id="tabs-1">
+                        <h1 class="result1"> </h1>
+                </div>
+                <!--
+                <div class="list-group-item" id="tabs-2">
+                        <h1 class="result">
+                </div>
+                <div class="list-group-item" id="tabs-3">
+                        <h1 class="result3">
+                </div> -->
+              </div>
+<!-- <div ><h1 class="result"> </h1></div>
+<div ><h1 class="result1"></h1></div> -->
+
+
+<script>
+    var header = document.getElementById("tabs");
+var btns = header.getElementsByClassName("list-group-item");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(" active", "");
+  this.className += " active";
+  });
+}
+$( document ).ready(function() {
+  
+    const apiKey="635017da1fbf630c6e9f95ae44b37eac";
+      // let city = "Helsinki";
+      let city1="Jakobstad";
+      // let city3="London";
+      let url1 = `http://api.openweathermap.org/data/2.5/weather?q=${city1}&units=metric&appid=${apiKey}`
+      // let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
+      // let url3 = `http://api.openweathermap.org/data/2.5/weather?q=${city3}&units=metric&appid=${apiKey}`
+
+
+
+
+//     $.get( url, function( data ) {
+//       console.log(logo)
+//       var logo=data.weather[0].icon;
+//     var weatherLogo=`http://openweathermap.org/img/wn/${logo}@2x.png`
+// var humidity=data.main.humidity;
+// var pressure=data.main.pressure;
+// var desc=data.weather[0].description;
+//   $( ".result" ).html( data.main.temp +' °C in Helsinki ' +'<img src="'+weatherLogo+'">' +'<br>'+ data.weather[0].description+'<br>'+
+//   pressure +' hPa'+'<br>'+ 'humidity: '+humidity + ' %');
+//   console.log(data)
+// });
+
+
+// });
+function update(){
+$.get( url1, function( data ) {
+  var logo=data.weather[0].icon;
+    var weatherLogo=`http://openweathermap.org/img/wn/${logo}@2x.png`
+    var desc=data.weather[0].description;
+    var pressure=data.main.pressure;
+    var humidity=data.main.humidity;
+  $( ".result1" ).html( data.main.temp +' °C in Jakobstad ' +'<img src="'+weatherLogo+'">' +'<br>'+data.weather[0].description+'<br>'+
+  pressure +' hPa'+'<br>'+ 'humidity: '+humidity + ' %');
+ 
+});
+}setInterval(update,1800000);
+update();
+})
+
+
+
+
+
+
+// $.get( url3, function( data ) {
+//   var logo=data.weather[0].icon;
+//     var weatherLogo=`http://openweathermap.org/img/wn/${logo}@2x.png`
+//     var desc=data.weather[0].description;
+//     var pressure=data.main.pressure;
+//     var humidity=data.main.humidity;
+//   $( ".result3" ).html( data.main.temp +' °C in London ' +'<img src="'+weatherLogo+'">' +'<br>'+data.weather[0].description+'<br>'+
+//   pressure +' hPa'+'<br>'+ 'humidity: '+humidity + ' %');
+//   console.log(data)
+// });
+    
+    
+</script>
+</body>
+
+</html>

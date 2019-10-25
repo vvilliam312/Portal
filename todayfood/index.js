@@ -6,8 +6,8 @@ const sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('foodlist.db');
 const parse = require("node-html-parser").parse;
 var cron = require('node-cron');
-var valid = cron.validate('59 * * * *');
-var invalid = cron.validate('60 * * * *');
+/*var valid = cron.validate('59 * * * *');
+var invalid = cron.validate('60 * * * *');*/
 cron.schedule('0 */4 * * *', () => {
   getData();
   console.log('running a task every 4 hour');

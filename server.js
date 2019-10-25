@@ -6,7 +6,9 @@ const sqlite3 = require('sqlite3').verbose();
 var bodyParser =require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 let db = new sqlite3.Database('./todayfood/foodlist.db');
 app.use(express.static('public'))
 
@@ -34,6 +36,7 @@ if(err){
      })    
   })
 })
+
 
 
 
