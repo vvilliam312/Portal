@@ -89,10 +89,12 @@ console.log(desc)
 var uperDesc =desc.charAt(0).toUpperCase()+desc.slice(1);
   $( ".result1" ).html( data.main.temp +' °C '+'<img src="'+weatherLogo+'">' +'<br>'+uperDesc+'<br>'+
   pressure +' hPa'+'<br>'+ 'Luftfuktighet: '+humidity + ' %');
- 
+ console.log("updated!");
 });
-}setInterval(update,1800000);
+}
 update();
+setInterval(update,300000);
+console.log("UPDATED?");
 })
 
 

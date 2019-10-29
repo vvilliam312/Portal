@@ -65,7 +65,6 @@ let sql = `SELECT * from namns where datum = '${date}'`;
                  
 }); //app get 
 
- app.get('/picoftheday', (req, res) => res.send('Hello!World!'))
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
