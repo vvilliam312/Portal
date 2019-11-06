@@ -8,11 +8,12 @@ const parse = require("node-html-parser").parse;
 var cron = require('node-cron');
 /*var valid = cron.validate('59 * * * *');
 var invalid = cron.validate('60 * * * *');*/
-cron.schedule('0 */4 * * *', () => {
+/*cron.schedule('1 *  * * *', () => {
   getData();
-  console.log('running a task every 4 hour');
+ 
 });
-getData();
+*/
+
 function getData() {
     // console.log("Started Update On Food");
 
@@ -30,7 +31,7 @@ function getData() {
         console.error(err);
       }); 
   }
-
+getData();
 function parseHTML(body) {
     const root = parse(body);
     const mainText = root.querySelector(".mainText");
@@ -60,7 +61,7 @@ function parseHTML(body) {
     // console.log("datenow", date);
     let result;
     // console.log(d.toUTCString());
-    // console.log(foodList);
+   console.log(foodList);
     const finalList = foodList.map(food => {
       const splitted = food.split("<br />");
       // console.log( " splited "+splitted.length);
@@ -82,23 +83,29 @@ function parseHTML(body) {
       // console.log("result: "+result.fi)
       
     }
-    d = d.addDays(1); 
+     
      return result;
   }
   
     );
-    
+    console.log(result);
     var test1= new Date();
     var test2 = test1.getDay() -1;
 
+var year=test1.getFullYear();
+var month =test1.getMonth()+1;
+var day =test1.getDate();
+if(day<10){day="0"+day}
   //   var x =finalList[test2].sv;
   //  console.log(x)
-var datum= `${test1.getFullYear()}-${test1.getMonth()+1}-${test1.getDate()}`;
+var datum= `${year}-${month}-${day}`;
+console.log(datum)
 
 //var sql= `INSERT INTO todaysfood(svfood,fifood,date) VALUES('${finalList[test2].sv}','${finalList[test2].fi}',"${datum}")`;
+
 var sqldate= `SELECT COUNT(*) AS antal,id FROM todaysfood WHERE date = '${datum}'`
 db.get(sqldate, [], (err, row) => {
-  console.log(row.antal +" " + row.id)
+  console.log(sqldate +" " + row);
   if(!row.antal){
 
   
@@ -124,11 +131,11 @@ db.get(sqldate, [], (err, row) => {
     })
   }
   	
-db.close();
+
 });
 
 
-
+console.log(test1+" TEST1 "+test2 + " TEST2")
 console.log(finalList[test2])
   
    return finalList[test2].sv
@@ -152,3 +159,32 @@ console.log(finalList[test2])
     date.setDate(date.getDate() + days);
     return date;
 }
+/*setInterval(getData,10)
+*/
+
+
+function getFoodFromDb(datum){
+
+    var test1= new Date();
+    var test2 = test1.getDay() -1;
+    
+    /*var datum= `${test1.getFullYear()}-${test1.getMonth()+1}-${test1.getDate()}`;*/
+    var sqldate= `SELECT * FROM todaysfood WHERE date = '${datum}'`
+    var params=[];
+    var hello =0;
+console.log(sqldate);
+    db.get(sqldate,params,(err, row)=> {
+      console.log(row)
+      if(err){
+
+        console.log(err)
+
+      }
+     
+    /*if(row.id){return true}else{return false}
+      */
+   
+    })
+    
+}
+
