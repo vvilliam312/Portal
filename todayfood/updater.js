@@ -5,8 +5,16 @@ const sqlite3 = require('sqlite3').verbose();
 var iconv = require('iconv');
 let db = new sqlite3.Database('foodlist.db');
 const parse = require("node-html-parser").parse;
+var cron = require('node-cron');
+
 
 getFoodFromOptima();
+
+cron.schedule('0 0 * * *', () => {
+  getFoodFromOptima();
+ console.log("KÖRDES");
+});
+
 
 
 function splitDate($){
@@ -19,7 +27,7 @@ function splitDate($){
 
     const year = dateSplit[dateSplit.length - 1];
     
-    const d = year+"-"+zerofill(monthSplit)+"-"+zerofill(day+1);
+    const d = year+"-"+zerofill(monthSplit)+"-"+zerofill(day);
     //console.log(d + " HEJ")
   
  return d
@@ -153,7 +161,7 @@ var sqldate= `SELECT COUNT(*) AS antal,id FROM todaysfood WHERE date = '${res.da
     });
     }
     
-	}else{console.log("checkDb TRUE");
+	}else{console.log("checkDb TRUE" + " REDAN INLAGD");
 	
 	
 	}

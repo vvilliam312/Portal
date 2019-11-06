@@ -21,7 +21,12 @@ app.use(express.static('public'))
 app.get('/mat', (req, res,next) => {
     var test1= new Date();
     var test2 = test1.getDay() -1;
-var datum= `${test1.getFullYear()}-${test1.getMonth()+1}-${test1.getDate()}`;
+    function zerofill(param){
+	if(param<10){param="0"+param}
+	return param	
+}
+var datum= `${test1.getFullYear()}-${zerofill(test1.getMonth()+1)}-${zerofill(test1.getDate())}`;
+console.log(datum);
 var sqldate= `SELECT * FROM todaysfood WHERE date = '${datum}'`
 var params=[];
 
@@ -46,23 +51,35 @@ var d = new Date();
 var y=d.getFullYear();
 var m=d.getMonth()+1;
 var da=d.getDate();
+
+console.log(m,da);
+if(m<10){
+  m="0"+m;
+  }
+if(da<10){
+  da="0"+da;
+  }   
+  
 var date = y+"-"+m+"-"+da;
+
+  
+console.log(date);
 let sql = `SELECT * from namns where datum = '${date}'`;
-//console.log(sql);
+console.log(sql);
 
            db1.get(sql, [], (err, row) => {
                                  if (err) {
                                      //return console.log(err.message);
-                                     res.json({"fel":"felkk"})
+                                     res.json({"fel":"fel"})
                                  }
-            //console.log(row);
+            console.log(row);
   res.json({"namn":row.namn})
             })
            //res.json(row)
           
           
              
-                 
+  
 }); //app get 
 
 
