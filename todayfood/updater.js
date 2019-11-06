@@ -19,8 +19,8 @@ function splitDate($){
 
     const year = dateSplit[dateSplit.length - 1];
     
-    const d = year+"-"+zerofill(monthSplit)+"-"+zerofill(day);
-    console.log(d + " HEJ")
+    const d = year+"-"+zerofill(monthSplit)+"-"+zerofill(day+1);
+    //console.log(d + " HEJ")
   
  return d
 }
@@ -60,8 +60,25 @@ function zerofill(param){
 }
 
 
-function getFoodFromOptima(){
 
+function addDays(date, amount) {
+    var dateString = date;
+    var myDate = new Date(dateString);
+    
+    //add a day to the date
+     myDate.setDate(myDate.getDate() + amount);
+     var y = myDate.getFullYear(),
+    m = myDate.getMonth() + 1, // january is month 0 in javascript
+    d = myDate.getDate();
+var pad = function(val) { var str = val.toString(); return (str.length < 2) ? "0" + str : str};
+dateString = [y, pad(m), pad(d)].join("-");
+return dateString;
+  }
+
+
+
+function getFoodFromOptima(){
+new Promise(function(resolve,reject){
 	const url = "https://www.optimaedu.fi/svenska/for-studerande/studieguiden/lunchmeny-/-lounasmenu.html";
 	request({
 		method: 'GET',
@@ -70,11 +87,85 @@ function getFoodFromOptima(){
 		const $ = cheerio.load(body,{decodeEntities:false})
 		var food = $('.mainText h4+p').map((_,x)=> $(x).html());
 		var datum= splitDate($);
-		console.log(datum +" ASD")
+//		console.log(datum +" ASD")
+		resolve({food:food.get(),datum:datum})
+})
+	}).then(function(res)	{
+	//console.log(res);
+	let result="";
+		var answerfood=[];
+		var finalList=res.food;
+		
+		finalList.map(item => {
+		
+			var splitted = item.split("<br>");
+			//console.log(splitted + " ? SPLITTE? ");
+			
+			if(splitted.length <=2 ){
+//console.log(splitted[0] + " 0");
+      result = {
+        sv: splitted[0],
+        fi: splitted[1] 
+        
+      };
+     
+    }
+    else{
+      result = {
+        sv: splitted[0]+ " & " + splitted[1],
+        fi: splitted[2] + " & " + splitted[3]
+      };
+			
+			
+		}
+		answerfood.push(result);
+		//console.log(result.sv);
+	
+	
+	
+}) //map ends	
+return {food:answerfood,datum:res.datum}	
+}).then(function(res){
+console.log(res.datum);
+//console.log(res.food[1].sv);
 
 
-		new Promise(function(resolve,reject){
-			var sqldate= `SELECT COUNT(*) AS antal,id FROM todaysfood WHERE date = '${d}'`
+
+var sqldate= `SELECT COUNT(*) AS antal,id FROM todaysfood WHERE date = '${res.datum}'`
+
+
+			db.get(sqldate, [], (err, row) => {
+	
+  console.log(sqldate +" " + row.antal +" match");
+  if(!row.antal){
+	for(var f=0; f<res.food.length;f++){
+		console.log(res.food[f].sv);
+		
+	//console.log("checkDb FALSE");
+	 var insert= `INSERT INTO todaysfood(svfood,fifood,date) VALUES(?,?,?)`;
+  var params = [res.food[f].sv, res.food[f].fi,addDays(res.datum,f)];
+     db.run(insert, params, function(err){
+      if(err){
+        console.log(err);
+      }
+  
+  
+    });
+    }
+    
+	}else{console.log("checkDb TRUE");
+	
+	
+	}
+	
+	})
+})
+
+}//END OF FUNCTION 
+
+
+
+		/*var sqldate= `SELECT COUNT(*) AS antal,id FROM todaysfood WHERE date = '${d}'`
 			db.get(sqldate, [], (err, row) => {
 	
   console.log(sqldate +" " + row.antal +" match");
@@ -84,20 +175,25 @@ function getFoodFromOptima(){
 	}else{console.log("checkDb TRUE");
 	resolve(true)
 	}
+*/
 
-
-	})
-		}).then(function(res)	{
+	
+	/*
 			if(res){
 				console.log("Up to date");
 				}else{
 					console.log("Uppdatera");
 				}
-			})
+				return res
+			}).then(function(res) {
+				
+				console.log()
+				}
+			*/
 		
 		//console.log(food.get()[0]);
 		
-		
+		/*
 		let result;
 		var answerfood=[];
 		var finalList=food.get();
@@ -132,37 +228,14 @@ function getFoodFromOptima(){
 	var finalResult = []; 
 	
 	console.log(result);
-	/*switch (test2) {
-  case 0:
-    day = "Sunday";
-    break;
-  case 1:
-    
-    day = "Monday";
 	
-    break;
-  case 2:
-     day = "Tuesday";
-     //console.log(result.sv)
-    break;
-  case 3:
-    day = "Wednesday";
-    break;
-  case 4:
-    day = "Thursday";
-    break;
-  case 5:
-    day = "Friday";
-    break;
-  case 6:
-    day = "Saturday";
-	}
+	
 		*/
-	})
-})
+	
 
 
-}
+
+
 
 
 
