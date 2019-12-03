@@ -16,18 +16,21 @@
 <h1 id="mat">DET DU ÄTER</h1>
 <script>
 $(document).ready(function(){
- 
+ function update(){
  
 	$.get( "/mat", function( data ) {
   $( "#mat" ).html(data.data[0].svfood);
   
  
-
+});
+}
+update();
+setInterval(update,14400000);
 <!--console.log(data.data[0].svfood)
 
 
 -->
-});
+
 
 
 

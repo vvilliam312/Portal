@@ -26,13 +26,16 @@ var m=d.getMonth()+1;
 var da=d.getDate();
 var date = y+"-"+m+"-"+da;
 let url = `http://localhost:3000/getname`
-
+function update(){
 $.getJSON(url, function(data){
     console.log(data);
     $("#result").html(data.namn)
     
 
-});
+}); 
+}
+update();
+setInterval(update,14400000);
 })
 
 </script> 

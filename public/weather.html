@@ -85,16 +85,16 @@ $.get( url1, function( data ) {
     var desc=data.weather[0].description;
     var pressure=data.main.pressure;
     var humidity=data.main.humidity;
-console.log(desc)
+//console.log(desc)
 var uperDesc =desc.charAt(0).toUpperCase()+desc.slice(1);
   $( ".result1" ).html( data.main.temp +' °C '+'<img src="'+weatherLogo+'">' +'<br>'+uperDesc+'<br>'+
   pressure +' hPa'+'<br>'+ 'Luftfuktighet: '+humidity + ' %');
- console.log("updated!");
+ //console.log("updated!");
 });
 }
-update();
-setInterval(update,300000);
-console.log("UPDATED?");
+update();           
+setInterval(update,600000);
+//console.log("UPDATED?");
 })
 
 

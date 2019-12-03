@@ -12,10 +12,13 @@ getFoodFromOptima();
 
 cron.schedule('0 0 * * *', () => {
   getFoodFromOptima();
- console.log("KÖRDES");
+ console.log("KÖRDES VARJE DAG KL 00");
 });
 
-
+cron.schedule('0 09 * * MON', () => {
+  getFoodFromOptima();
+ console.log("KÖRDES MÅNDAG 09.00");
+});
 
 function splitDate($){
 	var date= $('.mainText h3').html().split("<br>")[0].match(/(\d{1,2}\.)?\d{1,2}-\d{1,2}.\d{1,2}.\d{4}/)[0];

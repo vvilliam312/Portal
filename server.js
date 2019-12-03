@@ -26,7 +26,7 @@ app.get('/mat', (req, res,next) => {
 	return param	
 }
 var datum= `${test1.getFullYear()}-${zerofill(test1.getMonth()+1)}-${zerofill(test1.getDate())}`;
-console.log(datum);
+//console.log(datum);
 var sqldate= `SELECT * FROM todaysfood WHERE date = '${datum}'`
 var params=[];
 
@@ -63,7 +63,7 @@ if(da<10){
 var date = y+"-"+m+"-"+da;
 
   
-console.log(date);
+//console.log(date);
 let sql = `SELECT * from namns where datum = '${date}'`;
 console.log(sql);
 
