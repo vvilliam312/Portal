@@ -2,7 +2,7 @@
 const fetch = require("node-fetch");
 
 const sqlite3 = require('sqlite3').verbose();
- 
+var Iconv  = require('iconv').Iconv;
 let db = new sqlite3.Database('foodlist.db');
 const parse = require("node-html-parser").parse;
 var cron = require('node-cron');

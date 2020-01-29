@@ -1,4 +1,3 @@
-
 const cheerio = require('cheerio');
 const request = require('request');
 const sqlite3 = require('sqlite3').verbose();
@@ -213,7 +212,6 @@ var sqldate= `SELECT COUNT(*) AS antal,id FROM todaysfood WHERE date = '${res.da
 			
 			var splitted = item.split("<br>");
 			if(splitted.length <=2 ){
-
       result = {
 		//date:day,
         sv: splitted[0],
@@ -257,6 +255,3 @@ function toUTF8(body) {
   var buf = ic.convert(body);
   return buf.toString('utf-8');
 }
-
-
-
